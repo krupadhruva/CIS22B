@@ -38,14 +38,30 @@ int readScores(int &countA, int &countB, int &countC, int &countD,
     return countInvalid;
 }
 
+void printSquare(char ch, int dimension) {
+    for (int row = 0; row < dimension; ++row) {
+        for (int col = 0; col < dimension; ++col) {
+            if (col == 0 || col == dimension - 1 || row == 0 ||
+                row == dimension - 1) {
+                cout << ch;
+            } else {
+                cout << ' ';
+            }
+        }
+
+        cout << endl;
+    }
+}
+
 int main() {
+    // Test reading scores
     int countA, countB, countC, countD, countF;
     int countInvalid = readScores(countA, countB, countC, countD, countF);
-
     cout << endl
          << "A = " << countA << ", B = " << countB << ", C = " << countC
          << ", D = " << countD << ", F = " << countF
          << ", Invalid = " << countInvalid << endl;
 
-    return countInvalid;
+    // Test printing ASCII square
+    printSquare('#', 5);
 }
