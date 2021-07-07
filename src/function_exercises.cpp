@@ -73,18 +73,56 @@ bool isComment() {
     return false;
 }
 
+bool CheckAgainstPasswordRules(string password) {
+    if (password.length() < 8) {
+        return false;
+    }
+
+    bool hasUpper = false;
+    bool hasLower = false;
+    bool hasSpecial = false;
+
+    for (int ii = 0; ii < password.length(); ++ii) {
+        const char ch = password.at(ii);
+
+        if (isspace(ch)) {
+            return false;
+        } else if (isupper(ch)) {
+            hasUpper = true;
+        } else if (islower(ch)) {
+            hasLower = true;
+        } else if (ch == '!' || ch == '@' || ch == '#') {
+            hasSpecial = true;
+        }
+    }
+
+    return hasUpper && hasLower && hasSpecial;
+}
+
 int main() {
     // Test reading scores
-    int countA, countB, countC, countD, countF;
-    int countInvalid = readScores(countA, countB, countC, countD, countF);
-    cout << endl
-         << "A = " << countA << ", B = " << countB << ", C = " << countC
-         << ", D = " << countD << ", F = " << countF
-         << ", Invalid = " << countInvalid << endl;
+    {
+        int countA, countB, countC, countD, countF;
+        int countInvalid = readScores(countA, countB, countC, countD, countF);
+        cout << endl
+             << "A = " << countA << ", B = " << countB << ", C = " << countC
+             << ", D = " << countD << ", F = " << countF
+             << ", Invalid = " << countInvalid << endl;
+    }
 
     // Test printing ASCII square
     printSquare('#', 5);
 
     // Test C++ comment
-    cout << isComment() << endl;
+    {
+        bool retVal = isComment();
+        cout << "Is string is a comment: " << (retVal ? "true" : "false")
+             << endl;
+    }
+
+    // Test if password is valid
+    {
+        bool retVal = CheckAgainstPasswordRules("hello!#D");
+        cout << "Is password valid: " << (retVal ? "true" : "false") << endl;
+    }
 }
