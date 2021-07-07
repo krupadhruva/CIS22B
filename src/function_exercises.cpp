@@ -53,6 +53,26 @@ void printSquare(char ch, int dimension) {
     }
 }
 
+bool isComment() {
+    cout << "Enter text: ";
+    string text;
+    cin >> text;
+
+    if (text.empty()) {
+        return false;
+    }
+
+    for (int ii = 0; ii < text.length() - 1; ++ii) {
+        if (text.at(ii) == ' ') {
+            continue;
+        }
+
+        return (text.at(ii) == '/' && text.at(ii + 1) == '/');
+    }
+
+    return false;
+}
+
 int main() {
     // Test reading scores
     int countA, countB, countC, countD, countF;
@@ -64,4 +84,7 @@ int main() {
 
     // Test printing ASCII square
     printSquare('#', 5);
+
+    // Test C++ comment
+    cout << isComment() << endl;
 }
