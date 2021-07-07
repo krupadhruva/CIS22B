@@ -8,6 +8,18 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * Tabulates the scores into grades
+ *
+ * Arguments are passed by reference and used as placeholder for output
+ *
+ * @param countA int Number of 'A' grades in the scores provided
+ * @param countB int Number of 'B' grades in the scores provided
+ * @param countC int Number of 'C' grades in the scores provided
+ * @param countD int Number of 'D' grades in the scores provided
+ * @param countF int Number of 'F' grades in the scores provided
+ * @return int Number of invalid scores
+ */
 int readScores(int &countA, int &countB, int &countC, int &countD,
                int &countF) {
     countA = countB = countC = countD = countF = 0;
@@ -38,6 +50,12 @@ int readScores(int &countA, int &countB, int &countC, int &countD,
     return countInvalid;
 }
 
+/**
+ * Prints a square using ASCII character and dimension provided
+ *
+ * @param ch char ASCII value to use for printing
+ * @param dimension int Dimension of the square to print
+ */
 void printSquare(char ch, int dimension) {
     for (int row = 0; row < dimension; ++row) {
         for (int col = 0; col < dimension; ++col) {
@@ -53,6 +71,11 @@ void printSquare(char ch, int dimension) {
     }
 }
 
+/**
+ * Checks if user entered string is a C++ comment
+ *
+ * @return bool True if comment, else false
+ */
 bool isComment() {
     cout << "Enter text: ";
     string text;
@@ -73,7 +96,17 @@ bool isComment() {
     return false;
 }
 
-bool CheckAgainstPasswordRules(string password) {
+/**
+ * Function to check if a password is valid based on following rules
+ *
+ *  - Should be greater than or equal to 8 in chars
+ *  - Must have an upper, lower and special chars like '!', '#' or '@'
+ *  - Should not have a space in it
+ *
+ * @param password string containing password
+ * @return bool true is valid or false
+ */
+bool CheckAgainstPasswordRules(const string &password) {
     if (password.length() < 8) {
         return false;
     }
@@ -82,9 +115,7 @@ bool CheckAgainstPasswordRules(string password) {
     bool hasLower = false;
     bool hasSpecial = false;
 
-    for (int ii = 0; ii < password.length(); ++ii) {
-        const char ch = password.at(ii);
-
+    for (char ch : password) {
         if (isspace(ch)) {
             return false;
         } else if (isupper(ch)) {
