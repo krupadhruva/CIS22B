@@ -8,3 +8,4 @@ include_directories(include)
 include_directories(src)
 
 add_executable(function_exercises src/function_exercises.cpp)
+add_executable(array_function_exercises src/array_function_exercises.cpp)
