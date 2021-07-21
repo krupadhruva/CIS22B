@@ -91,7 +91,7 @@ int main(int argc, const char *argv[]) {
         cout << *(arr[ii]) << endl;
         delete arr[ii];
     }
-    delete arr;
+    delete[] arr;
 
     return 0;
 }
