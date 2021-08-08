@@ -21,6 +21,8 @@ public:
     virtual double getCost() = 0;
     virtual int getDistance() = 0;
     virtual std::string toString() = 0;
+
+    virtual ~Shipping() = default;
 };
 
 /**
@@ -88,7 +90,7 @@ public:
     std::string toString() override {
         ostringstream oss;
         oss << "DESTINATION(" << getDestination() << ") MILES(" << getDistance()
-            << ") SHIPPING_COST(" << getCost() << ")";
+            << ") SHIPPING_COST($" << getCost() << ")";
         return oss.str();
     }
 };
@@ -119,11 +121,11 @@ public:
  * shipping)
  * @return Pointer to most expensive shipping for package
  */
-Package *getMostExpensive(const vector<Package *> &packages) {
-    Package *mostExpensive = nullptr;
+Shipping *getMostExpensive(const vector<Shipping *> &packages) {
+    Shipping *mostExpensive = nullptr;
 
     for (auto pkg : packages) {
-        if (!mostExpensive || pkg->doesCostMore((*mostExpensive))) {
+        if (!mostExpensive || pkg->getCost() > mostExpensive->getCost()) {
             mostExpensive = pkg;
         }
     }
@@ -137,8 +139,8 @@ Package *getMostExpensive(const vector<Package *> &packages) {
  *
  * @return Pointer to a shipping package
  */
-Package *createPackage() {
-    Package *res = nullptr;
+Shipping *createPackage() {
+    Shipping *res = nullptr;
     size_t remainingAttempts = 3;
 
     do {
@@ -184,7 +186,7 @@ int main(int argc, const char *argv[]) {
     RushedPackage r2(2, "two rushed");
     RushedPackage r3(3, "three rushed");
 
-    vector<Package *> packages = {&p1, &r1, &p2, &r2, &p3, &r3};
+    vector<Shipping *> packages = {&p1, &r1, &p2, &r2, &p3, &r3};
 
     {
         cout << endl << "Test string output:" << endl;
@@ -239,7 +241,7 @@ int main(int argc, const char *argv[]) {
     }
 
     {
-        Package *mostExpensive = getMostExpensive(packages);
+        Shipping *mostExpensive = getMostExpensive(packages);
         assert(mostExpensive == &r3);
         cout << endl
              << "Test get most expensive package (expecting: " << r3.toString()
@@ -248,7 +250,7 @@ int main(int argc, const char *argv[]) {
 
     {
         cout << endl << "Test package by user interaction:" << endl;
-        Package *package = createPackage();
+        Shipping *package = createPackage();
         if (package) {
             cout << "User added package: " << package->toString() << endl;
             delete package;
